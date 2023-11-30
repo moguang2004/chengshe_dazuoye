@@ -1,0 +1,170 @@
+#include<iostream>
+using namespace std;
+#include<fstream>
+#include<cstring>
+
+struct info {
+	int data_in;
+	int data_middle;
+	int data_out;
+	int middle_number;
+};
+info message[4];
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//以下全局变量
+int data_in[20] = { 0 };//可更改的输入传送带
+int data_middle[20] = { 0 };//可更改的中间空地
+int middle_number = 0;//可更改的空地数目
+int data_out[20] = { 0 };//输出传送带
+int current_box = 0;//关于当前积木有一个小小的bug
+
+//以下为局部变量
+int M=20;//cin>>M;
+string *order=new string[M];//储存输入的命令行
+
+int NO_pass = 0;
+//读取存储内容，获得完成的关卡数
+int read_storage() {
+
+	int Max_pass = 0;//寻找目前通关数
+	ifstream file;
+	file.open("storage.txt");
+	if (file.is_open()) {
+		while (file >> NO_pass) {
+			if (NO_pass > Max_pass) {
+				Max_pass = NO_pass;
+			}
+		}
+		return Max_pass;
+	}
+	else
+		return 0;
+
+}
+//关卡选择界面+返回选择的关卡序号
+int choice() {
+	cout << "请选择关卡："<<endl;
+	int Max_pass = read_storage();
+
+	cout << "关卡一：";
+	if (Max_pass == 0)
+		cout << "未完成";
+	else
+		cout << "已完成";
+	//打印第一行
+	cout << endl;
+
+	cout << "关卡二：";
+	if (Max_pass >= 2)
+		cout << "已完成";
+	if (Max_pass == 1)
+		cout << "未完成";
+	if (Max_pass == 0)
+		cout << "请先完成关卡1";
+	//打印第二行
+	cout << endl;
+
+	cout << "关卡三：";
+	if (Max_pass >= 3)
+		cout << "已完成";
+	if (Max_pass == 2)
+		cout << "未完成";
+	if (Max_pass < 2)
+		cout << "请先完成关卡2";
+	//打印第三行
+	cout << endl;
+
+	cout << "关卡四：";
+	if (Max_pass == 4)
+		cout << "已完成";
+	if (Max_pass == 3)
+		cout << "未完成";
+	if (Max_pass < 3)
+		cout << "请先完成任务3";
+	//打印第四行
+	cout << endl;
+
+	cout << "请输入要选择的关卡：";
+	int pass = 0;
+	while (cin >> pass) {
+		if (pass > Max_pass + 1 or pass > 4)
+			cout << "输入不符合规范,请重新选择关卡";
+
+		if (pass <= Max_pass + 1 and pass <= 4)
+			return pass;
+	}
+}
+int add(int X) {
+	if (current_box == 0 || data_middle[X] == 0) {
+		return 0;//或者在这里插入一个报错的函数
+	}
+	else {
+		current_box += data_middle[X];
+	}
+}
+//inbox函数
+int inbox() {
+	if (data_in[0] == 0) {
+		return 0;//或者在这里插入一个游戏结束的函数
+	}
+	if (data_in[0] != 0) {
+		current_box = data_in[0];
+		for (int i = 1; i < sizeof(data_in) / sizeof(int); i++) {
+			data_in[i - 1] = data_in[i];//更改传送带的积木
+		}
+		return 1;
+	}
+}
+//copyto函数
+int copyto(int X) {
+	if (current_box == 0 ||middle_number<=X) {
+		return 0;//或者运行错误函数
+	}
+	else {
+		data_middle[X] == current_box;
+		return 1;
+	}
+}
+
+//jump函数
+int jump(int X) {//有可能程序会无穷运行，需要注意终止条件
+	//不是很会写，需要再讨论以下jump的实现
+
+
+
+
+}
+
+
+//执行命令行的函数
+void conduct(string* order,int x){ 
+
+
+
+
+}
+
+
+
+
+
+
+int main() {
+	choice();
+	return 0;
+
+}
